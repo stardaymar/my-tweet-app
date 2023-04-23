@@ -1,41 +1,23 @@
 import React, { useState } from 'react';
 
-function Form({ onAddTweet }) {
-  const [tweetText, setTweetText] = useState('');
-  const [error, setError] = useState('');
+function Form() {
+  const [tweet, setTweet] = useState('');
 
-  const handleChange = (event) => {
-    setTweetText(event.target.value);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // agregar el tweet a la lista de tweets
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (tweetText.length > 280) {
-      setError('El tweet no debe exceder los 280 caracteres');
-      return;
-    }
-
-    const newTweet = {
-      id: new Date().getTime(),
-      text: tweetText,
-      favorite: false,
-    };
-
-    onAddTweet(newTweet);
-    setTweetText('');
-    setError('');
+  const handleInputChange = (e) => {
+    setTweet(e.target.value);
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor='tweetText'>Escribe tu tweet:</label>
-      <textarea
-        id='tweetText'
-        value={tweetText}
-        onChange={handleChange}
-      ></textarea>
-      {error && <div className='error'>{error}</div>}
+      <label>
+        Nuevo tweet:
+        <input type='text' value={tweet} onChange={handleInputChange} />
+      </label>
       <button type='submit'>Enviar</button>
     </form>
   );
